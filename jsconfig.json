@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@router/*": ["router/*"],
+      "@utils/*": ["utils/*"],
+      "@api/*": ["api/*"],
+      "@assets/*": ["assets/*"],
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ],
+}
