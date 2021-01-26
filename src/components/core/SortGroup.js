@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Pressable } from 'react-native'
 import { Icon } from '@ant-design/react-native'
-import styles from '@components/museum/style'
+import styles from '@assets/style/museum'
  
 const SortGroup = (props) => {
   const sortList = props.sortList
@@ -10,12 +10,12 @@ const SortGroup = (props) => {
   const checkVal = checkSort[checkKey] // 当前选中排序的值 1 或 -1
   const sortChange = props.sortChange
   return (
-    <>
+    <View style={styles.sortWrapper}>
       { sortList.map( item => {
         return (
           <Pressable key={item.text + new Date().getTime()} onPress={() => sortChange(item.value)} style={styles.sortView}>
-            <Text style={{color: (checkSort && checkKey === item.value) ? '#80DEEA':'#949494'}}>{item.text}</Text>
-              <View style={styles.sortIcon}>
+            <Text style={{color: (checkSort && checkKey === item.value) ? '#80DEEA':'#949494', fontSize: 15}}>{item.text}</Text>
+            <View style={styles.sortIcon}>
                 <Icon name="caret-up" size="6" color={checkKey === item.value && checkVal ===1?'#80DEEA':'#949494'}/>
                 <Icon name="caret-down" size="6" color={checkKey === item.value && checkVal ===-1?'#80DEEA':'#949494'}/>
             </View>
@@ -23,7 +23,7 @@ const SortGroup = (props) => {
         )
       }
       )}
-    </>
+    </View>
   )
 }
 

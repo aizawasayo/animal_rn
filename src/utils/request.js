@@ -32,13 +32,13 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   response => {
-      const res = response.data
-      // if the custom code is not 200, it is judged as an error.
-      if (res.code !== 200) {
-        console.warn(res.message)
+    const res = response.data
+    // if the custom code is not 200, it is judged as an error.
+    if (res.code !== 200) {
+      console.warn(res.message)
         
-        // 508: Illegal token 非法token; 512: Other clients logged in 其他客户端登陆了; 514: Token expired Token 过期了;
-        if (res.code === 508 || res.code === 512 || res.code === 514) {
+      // 508: Illegal token 非法token; 512: Other clients logged in 其他客户端登陆了; 514: Token expired Token 过期了;
+      if (res.code === 508 || res.code === 512 || res.code === 514) {
           // to re-login
           // if (await this.$root.$confirm('提示', '你已经登出了账户, 你可以关闭这个页面，或者重新登录', {
           //     color: 'warning',
@@ -48,16 +48,16 @@ service.interceptors.response.use(
           //     this.$router.push(`/login?redirect=${this.$route.fullPath}`)
           //   })
           // }
-        }
-        return Promise.reject(new Error(res.message || 'Error'))
-      } else {
-        return res
       }
-    },
-    error => {
-      console.warn('err' + error) // for debug
-      return Promise.reject(error)
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
+      return res 
     }
+  },
+  error => {
+    console.warn('err' + error) // for debug
+    return Promise.reject(error)
+  }
 )
 
 export default service

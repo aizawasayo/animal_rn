@@ -1,3 +1,8 @@
+import getOption from '@utils/get-option'
+// 把字符串转为方法名，带参数
+export function strToFun(fun, param){
+  eval(fun +'("'+param+'")')
+}
 // 判断两个对象的内容是否一致
 export function isObjectValueEqual(a, b) {
   // 判断两个对象是否指向同一内存，指向同一内存返回true
@@ -45,4 +50,58 @@ export function getChangedSort(sortName, sort) {
     newSort = {[sortName]: sVal}
   }
   return newSort
+}
+
+export async function getOptions(){
+  let filterOptions = {}
+
+  filterOptions['hasFake'] = {
+    list: [
+      { text: '有赝品', value: true },
+      { text: '无赝品', value: false }
+    ],
+    title: '有无赝品',
+    key: 'hasFake',
+    mulit: false // 单选
+  }
+
+  filterOptions['ownStatus'] = {
+    list: [
+      { text: '未捕捉', value: false },
+      { text: '已捕捉', value: true }
+    ],
+    title: '捕捉情况',
+    key: 'ownStatus',
+    mulit: false
+  }
+
+  filterOptions['collectStatus'] = {
+    list: [
+      { text: '未拥有', value: true },
+      { text: '已拥有', value: false },
+    ],
+    title: '收集情况',
+    key: 'collectStatus',
+    mulit: false
+  }
+
+  // 鱼类
+  filterOptions['fishLocale'] = await getOption({ type: 'fishLocale', title: '场所', key: 'locale'})
+  filterOptions['fishUnlock'] = await getOption({ type: 'fishUnlock', title: '解锁条件', key: 'unlockCondition'})
+  filterOptions['shadow'] = await getOption({ type: 'shadow', title: '鱼影大小', key: 'shadow'})  
+
+  // 昆虫
+  filterOptions['insectLocale'] = await getOption({ type: 'insectLocale', title: '场所', key: 'locale'})
+  filterOptions['insectUnlock'] = await getOption({ type: 'insectUnlock', title: '解锁条件', key: 'unlockCondition'})
+ 
+  // 海洋生物
+  filterOptions['halobiosLocale'] = await getOption({ type: 'halobiosLocale', title: '场所', key: 'locale'})
+  filterOptions['halobiosUnlock'] = await getOption({ type: 'halobiosUnlock', title: '解锁条件', key: 'unlockCondition'})
+  filterOptions['halobiosShadow'] = await getOption({ type: 'halobiosShadow', title: '鱼影大小', key: 'shadow'})  
+
+  // 通用
+  filterOptions['rarity'] = await getOption({ type: 'rarity', title: '稀有度', key: 'rarity'})  
+  filterOptions['size'] = await getOption({ type: 'size', title: '尺寸', key: 'size'})  
+  
+  return filterOptions
 }

@@ -25,7 +25,7 @@ const SearchGuide = () => {
       <SearchBar      
         value={query}  
         placeholder="请输入标题关键字查找"    
-        cancelText={query.query!== '' ? '取消' : '搜索'}   
+        cancelText={query!== '' ? '取消' : '搜索'}   
         onSubmit={query => onSearch(query)}
         onChange={onSearch}  
         onCancel={onCancel}  

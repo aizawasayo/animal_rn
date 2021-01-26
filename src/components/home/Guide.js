@@ -3,11 +3,10 @@ import { Carousel, Icon } from '@ant-design/react-native';
 import { View, Text, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { getBannerList } from '@api/banner'
 import GuideList from '@components/core/GuideList'
-import styles from '@components/home/style'
+import styles from '@assets/style'
 
 const Guide = (props) => {
   const navigation = props.navigation
-  const apiUrl = global.baseUrl
   const [loading, setLoading] = useState(true) // 轮播图数据是否加载完成
   const [bannerData, setBannerData] = useState([]) // 轮播图数据
   const listRef = useRef(null)

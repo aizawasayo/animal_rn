@@ -1,9 +1,9 @@
 /**
  * @format
  */
-import {AppRegistry} from 'react-native';
+import './global'; // 初始化全局变量
+import { AppRegistry } from 'react-native';
 import App from './App';
-import {name as appName} from './app.json';
-import Global from './global';
+import { name as appName } from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);

@@ -2,15 +2,16 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { SearchBar, Tabs } from '@ant-design/react-native';
 import { useToggle } from 'ahooks'
-import MuseumList from '@components/museum/MuseumList'
-import Fish from '@components/museum/Fish'
-import Insect from '@components/museum/Insect'
-import Halobios from '@components/museum/Halobios'
-import Fossil from '@components/museum/Fossil'
-import Artwork from '@components/museum/Artwork'
-import styles from '@components/museum/style'
+import { getFishes } from '@api/fish'
+import { getInsects } from '@api/insect'
+import { getHalobiosList } from '@api/halobios'
+import { getFossils } from '@api/fossil'
+import { getArtworkList } from '@api/artwork'
+import { getOptions } from '@utils'
+// import MuseumList from '@components/core/MuseumList'
+import MuseumList from '@components/core/MuseumList2'
+import styles from '@assets/style/museum'
 import Svg from '@components/core/Svg'
-import { set } from 'react-native-reanimated';
 
 const Museum = ({ navigation, route }) => {
   const tabs = [
@@ -32,16 +33,18 @@ const Museum = ({ navigation, route }) => {
   const [toggleShow, setToggleShow] = useState(true)
   const [position, { toggle }] = useToggle('north', 'south');
   const [sort, setSort] = useState({ name: 1 })
+  const [filterOptions, setFilterOptions] = useState(null)
   const listRef = useRef(null)
-  
   const listProps = { query, navigation, sort, setSort } // 几个列表组件的共同属性
 
   const onSearch = query => { 
-    setQuery(query);   
+    setQuery(query)
+    listRef.current.onRefresh()
   };
 
   const onCancel = () => {
     setQuery('')
+    listRef.current.onRefresh()
   }
 
   const tabChange = (tab, index) => {
@@ -60,7 +63,13 @@ const Museum = ({ navigation, route }) => {
       setToggleShow(true)
     }
   }
-  
+
+  useEffect(() => {
+    getOptions().then(res => {
+      setFilterOptions(res)
+    })
+  },[])
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {    
       e.preventDefault();
@@ -83,7 +92,7 @@ const Museum = ({ navigation, route }) => {
       <SearchBar      
         value={query}  
         placeholder="请输入名称关键字查找"    
-        cancelText={query.query!== '' ? '取消' : '搜索'}   
+        cancelText={query!== '' ? '取消' : '搜索'}   
         onSubmit={query => onSearch(query)}
         onChange={onSearch}  
         onCancel={onCancel}  
@@ -101,19 +110,57 @@ const Museum = ({ navigation, route }) => {
         onTabClick={tabClick}
       >
         <View style={styles.tabContent}>
-          <MuseumList ref={listRef} position={position} {...listProps} sortOptions={[nameSort, priceSort, raritySort]} />
+          <MuseumList
+            ref={listRef} 
+            type="fish" 
+            position={position} 
+            {...listProps} 
+            sortOptions={[nameSort, priceSort, raritySort]} 
+            filterOptions={filterOptions && [filterOptions.fishLocale, filterOptions.shadow, filterOptions.fishUnlock, filterOptions.ownStatus]} 
+            getList={getFishes} 
+          />
         </View>
         <View style={styles.tabContent}>
-          <Insect ref={listRef} position={position} {...listProps} sortOptions={[nameSort, priceSort, raritySort]} />
+          <MuseumList
+            ref={listRef} 
+            type="insect" 
+            position={position} 
+            {...listProps} 
+            sortOptions={[nameSort, priceSort, raritySort]} 
+            filterOptions={filterOptions && [filterOptions.insectLocale, filterOptions.shadow, filterOptions.insectUnlock, filterOptions.ownStatus]} 
+            getList={getInsects} 
+          />
         </View>
         <View style={styles.tabContent}>
-          <Halobios ref={listRef} position={position} {...listProps} sortOptions={[nameSort, priceSort, shadowSort]} />
+          <MuseumList
+            ref={listRef} 
+            type="halobios" 
+            position={position} 
+            {...listProps} 
+            sortOptions={[nameSort, priceSort, shadowSort]} getList={getHalobiosList}
+            filterOptions={filterOptions && [filterOptions.halobiosLocale, filterOptions.halobiosShadow, filterOptions.halobiosUnlock]}
+          />
         </View>
         <View style={styles.tabContent}>
-          <Fossil ref={listRef} {...listProps} sortOptions={[nameSort, priceSort]} />
+          <MuseumList
+            ref={listRef} 
+            type="fossil" 
+            {...listProps} 
+            modalHeight={160}
+            sortOptions={[nameSort, priceSort]} 
+            filterOptions={filterOptions && [filterOptions.collectStatus]}
+            getList={getFossils} 
+          />
         </View>
         <View style={styles.tabContent}>
-          <Artwork ref={listRef} {...listProps} sortOptions={[nameSort, sizeSort]} />
+          <MuseumList
+            ref={listRef} 
+            type="artwork" 
+            {...listProps} 
+            modalHeight={160}
+            sortOptions={[nameSort, sizeSort]} getList={getArtworkList} 
+            filterOptions={filterOptions && [filterOptions.size, filterOptions.hasFake]}
+          />
         </View>
       </Tabs>
       { toggleShow && <Pressable onPress={() => toggle()} style={styles.positionToggle}>

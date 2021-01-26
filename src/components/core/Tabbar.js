@@ -1,14 +1,14 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React from 'react';
 import { Icon } from '@ant-design/react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet } from 'react-native';
 
-// import Guide from '@components/home/Guide'
 import Guide from '@components/home/Guide'
 import Museum from '@components/home/Museum'
 import Community from '@components/home/Community'
 import Archive from '@components/home/Archive'
-import User from '@components/home/SearchGuide'
+// import User from '@components/home/User'
+import User from '@components/demo/Modal'
 
 const styles = StyleSheet.create({
   tabBarStyle: { 

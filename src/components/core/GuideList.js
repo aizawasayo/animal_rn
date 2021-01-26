@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { View, Text, Image, FlatList, TouchableHighlight } from 'react-native';
 import { getGuideList } from '@api/guide'
-import styles from '@components/home/style'
+import styles from '@assets/style'
 
 const GuideList = (props, ref) => {
-  const apiUrl = global.baseUrl // 一般不会变，不是state
   const [isloading, setIsloading] = useState(false) // 列表是否正在加载
   const [page, setPage] = useState(1) // 列表请求参数
   const [data, setData] = useState({list: [], total: 0}) // 列表数据

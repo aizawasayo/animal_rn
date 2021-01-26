@@ -3,9 +3,9 @@ import { Text } from 'react-native';
 import { NavigationContainer, DefaultTheme, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Tabbar from '@components/core/Tabbar'
-// import GuideList from '@components/demo/UseRequest'
 import GuideList from '@components/home/SearchGuide'
-import GuideDetail from '@components/detail/Guide'
+import GuideDetail from '@components/detail/GuideDetail'
+import MuseumDetail from '@components/detail/MuseumDetail'
 
 const MyTheme = {
   ...DefaultTheme,
@@ -78,11 +78,11 @@ const RootStack = createStackNavigator();
 
 const homeScreen = {
   Home: Tabbar,
-  GuideList
+  GuideList: GuideList
 }
 const detailScreens = { // 详情页组
-  GuideDetail,
-  MuseumDetail: GuideDetail
+  GuideDetail: GuideDetail,
+  MuseumDetail: MuseumDetail
 }
 
 const Routes = () => {

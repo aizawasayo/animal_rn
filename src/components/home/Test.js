@@ -2,10 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { SearchBar } from '@ant-design/react-native';
 import { View, Text, Image, FlatList, TouchableHighlight } from 'react-native';
 import { getGuideList } from '@api/guide'
-import styles from '@components/home/style'
+import styles from '@assets/style'
 
 const GuideList = ({ navigation, route }) => {
-  const apiUrl = global.baseUrl // 一般不会变，不是state
   const [isloading, setIsloading] = useState(false) // 列表是否正在加载
   const [guideQuery, setGuideQuery] = useState({ query: '', page: 1 }) // 列表请求参数
   const [guideData, setGuideData] = useState({ list: [], total: 0 }) // 列表数据
