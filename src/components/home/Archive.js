@@ -13,7 +13,10 @@ const Archive = ({ navigation, route }) => {
 
   useEffect(()=> {
     // console.warn(route.params)
-  })
+    console.warn('图鉴挂载')
+    return () => console.warn('图鉴卸载')
+  },[])
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>你好呀{route.params.msg}页</Text>

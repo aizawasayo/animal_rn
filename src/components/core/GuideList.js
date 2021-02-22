@@ -90,8 +90,8 @@ const GuideList = (props, ref) => {
     }
     getGuide();
 
-    return () => { count.current += 1 } // effect的清除阶段在每次重新渲染时都会执行
-  },[page, props.query]) // 只有攻略请求数据变化才会执行，包括组件挂载的第一次
+    return () => { count.current += 1 } // 在每次effect要再次被调用时，都先会执行它的清除阶段
+  },[page, props.query]) // 只有攻略请求数据变化才会执行，即使父组件没传值，组件初次挂载也会执行
   // 确保数组中包含了所有外部作用域中会发生变化且在 effect 中使用的变量，否则你的代码会引用到先前渲染中的旧变量。
 
   return (

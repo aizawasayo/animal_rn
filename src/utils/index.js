@@ -105,3 +105,72 @@ export async function getOptions(){
   
   return filterOptions
 }
+
+export function textFilter(text, length) {
+  let shortText = ''
+  const len = length ? length : 15
+  text && text.length > len ? (shortText = text.substring(0, len) + '...') : (shortText = text)
+  return shortText
+}
+
+/**
+ * Parse the time to string
+ * @param {(Object|string|number)} time
+ * @param {string} cFormat
+ * @returns {string | null}
+ */
+export function parseTime(time, cFormat) {
+  if (arguments.length === 0) {
+    return null
+  }
+  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
+  let date
+  if (typeof time === 'object') {
+    date = time
+  } else {
+    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
+      time = parseInt(time)
+    }
+    if (typeof time === 'number' && time.toString().length === 10) {
+      time = time * 1000
+    }
+    date = new Date(time)
+  }
+  const formatObj = {
+    y: date.getFullYear(),
+    m: date.getMonth() + 1,
+    d: date.getDate(),
+    h: date.getHours(),
+    i: date.getMinutes(),
+    s: date.getSeconds(),
+    a: date.getDay()
+  }
+  const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
+    const value = formatObj[key]
+    // Note: getDay() returns 0 on Sunday
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
+    return value.toString().padStart(2, '0')
+  })
+  return time_str
+}
+
+
+/**
+ * 把标准时间转换成时间戳
+ * 传入标准时间
+ */
+export function timestamp(date) {
+  var d = new Date(date).getTime()
+  return d / 1000
+}
+
+/**
+ * 时间戳转换成把标准时间
+ * 传入时间戳
+ */
+export function standardTime(timestamp) {
+  const time = timestamp.toString() + '000'
+  return new Date(parseInt(time))
+}

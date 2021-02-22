@@ -6,6 +6,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window')
 
 const ScaledImage = (props) => {
   const [source, setSource] = useState({uri: props.uri})
+  const styles = props.style ? props.style : {}
 
   useEffect(() => {
     Image.getSize(props.uri,(width, height) => {
@@ -19,8 +20,14 @@ const ScaledImage = (props) => {
         setSource({uri: props.uri, width: width, height: height});
       }
     });
-  },[])
-  return <Image source={{uri:source.uri}} style={{width: source.width, height: source.height}}/>
+  },[props.uri])
+
+  const imageStyle = {
+    width: source.width, 
+    height: source.height, 
+    ...styles,
+  }
+  return <Image source={{uri:source.uri}} style={imageStyle} />
 }
 
 ScaledImage.propTypes = {

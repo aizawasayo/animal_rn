@@ -2,7 +2,7 @@ import React , { useEffect, useState, useRef, useImperativeHandle, forwardRef } 
 import { Text, Image, View, FlatList, TouchableHighlight, ScrollView } from 'react-native';
 import { Button, Icon, WhiteSpace } from '@ant-design/react-native';
 import { useBoolean } from 'ahooks'
-import usePrevious from '@utils/hook/usePrevious'
+import { usePrevious, useDeepEffect } from '@utils/hook'
 import { isObjectValueEqual, getMonthStr, getChangedSort } from '@utils'
 import styles from '@assets/style/museum'
 import SortGroup from '@components/core/SortGroup'
@@ -92,6 +92,7 @@ const MuseumList = (props, ref) => {
   };
   
   const sortChange = (sortName) => { // 点击排序组按键
+    setFalse()
     const newSort = getChangedSort(sortName, sort)
     props.setSort(newSort)
   }
@@ -105,7 +106,6 @@ const MuseumList = (props, ref) => {
   }
   const finishFilter = () => { //
     setFalse()
-    console.warn(modalVisible)
   }
 
   const filterChecked = (key, checkVal, list) => {
@@ -120,7 +120,7 @@ const MuseumList = (props, ref) => {
     setFilters(prevFilter => ({...prevFilter, [key]: checkVal}))
   }
 
-  useEffect(() => {
+  useDeepEffect(() => {
     if(props.filterOptions && props.filterOptions !== []) {
       let newfilterOptions = props.filterOptions.map(opt => {
         opt.list.map(item => {item.checked = false})
@@ -130,7 +130,7 @@ const MuseumList = (props, ref) => {
     }   
   },[props.filterOptions])
 
-  useEffect(() => {    
+  useDeepEffect(() => {    
     if(isObjectValueEqual(props.sort, sort)) return
     // 传入的props.sort和当前sort不一致时才修改本组件的sort
     const propSortKey = Object.keys(props.sort)[0]
@@ -148,14 +148,14 @@ const MuseumList = (props, ref) => {
     }
   },[props.sort]) // 父组件传入的sort变化时
 
-  useEffect(() => {
+  useDeepEffect(() => {
     const currentCount = count.current;
    
-    const getList= async () => { // 获取攻略列表数据
+    const getList = async () => { // 获取攻略列表数据
       const query = props.query || ''
       const queryData = { query, page, pageSize, ...filters }
       queryData['sort'] = JSON.stringify(sort)  
-      console.warn(queryData)
+      // console.warn(queryData)
       setIsloading(true)
 
       const result = await props['getList'](queryData)

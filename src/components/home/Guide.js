@@ -5,8 +5,8 @@ import { getBannerList } from '@api/banner'
 import GuideList from '@components/core/GuideList'
 import styles from '@assets/style'
 
-const Guide = (props) => {
-  const navigation = props.navigation
+
+const Guide = ({ navigation }) => {
   const [loading, setLoading] = useState(true) // 轮播图数据是否加载完成
   const [bannerData, setBannerData] = useState([]) // 轮播图数据
   const listRef = useRef(null)
@@ -17,7 +17,6 @@ const Guide = (props) => {
     // const objCopy = Object.assign({}, sourceObj) // 拷贝对象副本
     setBannerData(result.data)
     setLoading(false)
- 
   }
 
   const goLink = (link) => {
@@ -37,20 +36,20 @@ const Guide = (props) => {
   },[]) // 仅在组件挂载时执行
 
   useEffect(() => {
-    const unsubscribe = props.navigation.addListener('tabPress', e => {
+    const unsubscribe = navigation.addListener('tabPress', e => {
       e.preventDefault();
       // navigation.navigate('Museum',{msg:'我是攻略'})
       // navigation.replace('Home',{ screen: 'Guide',params: {msg:'我是攻略'}})
-      props.navigation.jumpTo('Guide',{msg:'我是攻略'})
+      navigation.jumpTo('Guide',{msg:'我是攻略'})
       getBanner()
       listRef.current.onRefresh()
     });
     return unsubscribe;
-  });
+  },[navigation]) // navigation 是个对象，默认每次传来都是新的，加不加一样
 
   return (
     <>
-      <TouchableOpacity style={styles.fakeSearchBar} onPress={() => props.navigation.push('GuideList', { title: '攻略' })}>
+      <TouchableOpacity style={styles.fakeSearchBar} onPress={() => navigation.push('GuideList', { title: '攻略' })}>
         <View style={styles.fakeInput}>
           <Icon style={styles.searchIcon} name="search" size="xxs" />
           <Text style={styles.fakeKeyWords}>请输入关键字查找</Text>
@@ -70,7 +69,7 @@ const Guide = (props) => {
         }  
         </Carousel> }
       </View>
-      <GuideList ref={listRef} pageSize={4} navigation={props.navigation}></GuideList>
+      <GuideList ref={listRef} pageSize={4} navigation={navigation}></GuideList>
     </>
   )
 }

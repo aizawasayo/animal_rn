@@ -128,6 +128,21 @@ const styles = StyleSheet.create({
   base: {
     color:'red'
   },
+  loginBox: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  login: {
+    width: '100%',
+  },
+  loginItem: {
+    height: 60,
+    marginVertical: 10,
+    paddingVertical: 10
+  }
 });
 
 export default styles

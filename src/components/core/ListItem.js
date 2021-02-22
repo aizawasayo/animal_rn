@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { View, Text, Pressable } from 'react-native'
+import React from 'react';
+import { View, Text } from 'react-native'
 import { Icon } from '@ant-design/react-native'
-import styles from '@assets/style/museum'
- 
+import styles from '@assets/style/form'
+
 const ListItem = (props) => {
   const icon = props.icon
   const children = props.children
@@ -16,8 +16,11 @@ const ListItem = (props) => {
         <Text style={styles.listLabelText}>{props.label}</Text>
       </View>
       <View style={styles.listContent}>
-        <Text style={styles.listContentText}>{ children }</Text>
+        { typeof children === 'string' || typeof children === 'number' ? 
+          <Text style={styles.listContentText}>{ children }</Text> : <View>{ children }</View>
+        }
       </View>
+      { props.arrow && <Icon style={styles.listArrow} name="right" color="#8B99A1"/>}
     </View>
   )
 }

@@ -13,6 +13,7 @@
     "target": "esnext",
     "baseUrl": "./src",
     "paths": {
+      "@store/*": ["store/*"],
       "@components/*": ["components/*"],
       "@router/*": ["router/*"],
       "@utils/*": ["utils/*"],

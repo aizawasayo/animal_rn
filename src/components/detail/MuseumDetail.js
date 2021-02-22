@@ -8,7 +8,7 @@ import { getInsect } from '@api/insect'
 import { getHalobios } from '@api/halobios'
 import { getFossil } from '@api/fossil'
 import { getArtwork } from '@api/artwork'
-import styles from '@assets/style/museum'
+import styles from '@assets/style/form'
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window')
 

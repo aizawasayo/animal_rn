@@ -7,8 +7,8 @@ import Guide from '@components/home/Guide'
 import Museum from '@components/home/Museum'
 import Community from '@components/home/Community'
 import Archive from '@components/home/Archive'
-// import User from '@components/home/User'
-import User from '@components/demo/Modal'
+import User from '@components/home/User'
+// import User from '@components/demo/Test'
 
 const styles = StyleSheet.create({
   tabBarStyle: { 
@@ -28,7 +28,7 @@ const Tab = createBottomTabNavigator();
 export default function MyTabs({ navigation, route }) {
   return (
     <Tab.Navigator 
-      initialRouteName="Museum"
+      initialRouteName="User"
       tabBarOptions={{ 
         activeTintColor: '#81C784',
         inactiveTintColor: '#949494',

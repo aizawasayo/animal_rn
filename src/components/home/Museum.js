@@ -2,12 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { SearchBar, Tabs } from '@ant-design/react-native';
 import { useToggle } from 'ahooks'
+import { useOptions } from '@utils/hook'
 import { getFishes } from '@api/fish'
 import { getInsects } from '@api/insect'
 import { getHalobiosList } from '@api/halobios'
 import { getFossils } from '@api/fossil'
 import { getArtworkList } from '@api/artwork'
-import { getOptions } from '@utils'
 // import MuseumList from '@components/core/MuseumList'
 import MuseumList from '@components/core/MuseumList2'
 import styles from '@assets/style/museum'
@@ -33,6 +33,7 @@ const Museum = ({ navigation, route }) => {
   const [toggleShow, setToggleShow] = useState(true)
   const [position, { toggle }] = useToggle('north', 'south');
   const [sort, setSort] = useState({ name: 1 })
+  const { options } = useOptions()
   const [filterOptions, setFilterOptions] = useState(null)
   const listRef = useRef(null)
   const listProps = { query, navigation, sort, setSort } // 几个列表组件的共同属性
@@ -65,10 +66,10 @@ const Museum = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    getOptions().then(res => {
-      setFilterOptions(res)
-    })
-  },[])
+    if(Object.keys(options).length > 0){
+      setFilterOptions(options)
+    }
+  },[options])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {    
@@ -78,14 +79,14 @@ const Museum = ({ navigation, route }) => {
       //listRef.current.onRefresh()
     });
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation])
   
   useEffect(()=> {
     if(route.params.selectedTab){
       let currentIndex = tabs.findIndex(item => item.value === route.params.selectedTab)
       setCurrentTab(currentIndex)
     } 
-  },[route.params])
+  },[route.params.selectedTab])
 
   return (
     <>

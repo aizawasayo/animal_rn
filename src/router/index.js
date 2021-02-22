@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Text } from 'react-native';
+import { useOptions } from '@utils/hook'
 import { NavigationContainer, DefaultTheme, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Tabbar from '@components/core/Tabbar'
 import GuideList from '@components/home/SearchGuide'
 import GuideDetail from '@components/detail/GuideDetail'
 import MuseumDetail from '@components/detail/MuseumDetail'
+import UserEdit from '@components/user/UserEdit'
+import Logout from '@components/login/Logout'
+import Test1 from '@components/demo/Test1'
+import Test2 from '@components/demo/Test2'
+import Test3 from '@components/demo/Test3'
+import Test1Class from '@components/demo/Test1Class'
+import Test2Class from '@components/demo/Test2Class'
+import Test3Class from '@components/demo/Test3Class'
 
 const MyTheme = {
   ...DefaultTheme,
@@ -39,7 +48,7 @@ function MyTitle(props) { // 自定义标题文字组件，替代原来的中间
   return (
     <Text>{props.props.title}</Text>
   );
-}
+} 
 
 const setHeaderTitle = (route) => {
   let title = '动森之家'
@@ -78,14 +87,38 @@ const RootStack = createStackNavigator();
 
 const homeScreen = {
   Home: Tabbar,
-  GuideList: GuideList
+  GuideList
 }
 const detailScreens = { // 详情页组
-  GuideDetail: GuideDetail,
-  MuseumDetail: MuseumDetail
+  GuideDetail,
+  MuseumDetail
+}
+const userScreens = {
+  UserEdit,
+  Logout,
+  Test1,
+  Test2,
+  Test3,
+  Test1Class,
+  Test2Class,
+  Test3Class
 }
 
 const Routes = () => {
+  const { getOptsByApi } = useOptions()
+  
+  // const getOpt = useCallback(() => {
+  //   getOptsByApi()
+  // },[])
+
+  // useEffect(() => {
+  //  getOpt()
+  // },[getOpt])
+  
+  useEffect(() => {
+    getOptsByApi()
+  },[])
+
   return (
     <NavigationContainer theme={MyTheme}>
       <RootStack.Navigator 
@@ -96,6 +129,7 @@ const Routes = () => {
         {Object.entries({
           // Use the screens normally
           ...homeScreen,
+          ...userScreens,
           // Use some screens conditionally based on some condition
           ...detailScreens}).map(([name, component]) => (
           <RootStack.Screen name={name} component={component} key={name} />

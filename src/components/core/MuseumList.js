@@ -1,7 +1,7 @@
 import React , { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { Text, Image, View, FlatList, TouchableHighlight } from 'react-native';
 import { Icon } from '@ant-design/react-native';
-import usePrevious from '@utils/hook/usePrevious'
+import { usePrevious } from '@utils/hook'
 import { isObjectValueEqual, getMonthStr, getChangedSort } from '@utils'
 import styles from '@assets/style/museum'
 import SortGroup from '@components/core/SortGroup'
@@ -122,7 +122,7 @@ const MuseumList = (props, ref) => {
     getList(); 
 
     return () => { count.current += 1 }  
-  },[queryData, props.query])
+  },[queryData, props.query]) // queryData为对象，在依赖项为引用类型时，React进行的是浅比较。只要发生更新就会触发这个钩子，即使对象内容完全没变化。
  
   return (
     <>

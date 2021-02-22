@@ -1,4 +1,3 @@
-import { WhiteSpace } from '@ant-design/react-native';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -140,14 +139,7 @@ const styles = StyleSheet.create({
   filterModalView: {
     height: 400,
     backgroundColor: "white",
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 3.84,
-    // elevation: 5
+    elevation: 5
   },
   modalScrollView: {
     flex: 1,
@@ -163,11 +155,11 @@ const styles = StyleSheet.create({
   modalBtn: {
     flex: 1,
     width: '50%',
-    height: 50,
+    height: 49,
   },
   modalBtnText: {
     textAlign: 'center',
-    lineHeight: 50,
+    lineHeight: 49,
     fontSize: 16
   },
   filterTitle: {
@@ -218,83 +210,6 @@ const styles = StyleSheet.create({
     height: 16,
     marginRight: 16,
   },
-  detailContainer: {
-    margin: 15,
-  },
-  detailImgContainer: {
-    width: '100%',
-    marginBottom: 15,
-    paddingVertical: 15,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-  },
-  detailImg: {
-    width: 120,
-  },
-  detailListContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    overflow: 'hidden'
-  },
-  listItem: {
-    minHeight: 60,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    marginHorizontal: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  listLabel: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  listLabelText:{
-    fontSize: 18,
-    color: '#8B99A1',
-  },
-  labelIcon:{
-    marginRight: 10
-  },
-  listContent: {
-    paddingVertical: 10,
-    maxWidth: 220
-  },
-  listContentText: {
-    color: '#8B99A1',
-  },
-  morePicContainer: {
-    marginTop: 15,
-    padding: 15,
-    backgroundColor: 'white',
-    borderRadius: 10
-  },
-  morePicTitle: {
-    fontSize: 18,
-    color: '#666666'
-  },
-  morePicCont: { 
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginVertical: 15
-  },
-  morePicSin: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  moreImg: {
-    width: 150,
-  },
-  morePicTxt: {
-    marginTop: 5,
-    textAlign: 'center',
-    color: '#888888',
-  },
-  
 })
 
 export default styles
